@@ -48,7 +48,7 @@ function Dashboard() {
                 <tbody>
                     <tr>
                         <td>
-                            <img src="avatar1.png" alt="Avatar" />
+                            <img src="olivia.jpg" alt="Avatar" />
                             Olivia Rhye
                         </td>
                         <td>5765890-879 - B</td>
@@ -60,7 +60,7 @@ function Dashboard() {
                     </tr>
                     <tr>
                         <td>
-                            <img src="avatar2.png" alt="Avatar" />
+                            <img src="olivia.jpg" alt="Avatar" />
                             Lindy Kumalo
                         </td>
                         <td>8865890-879 - C</td>
