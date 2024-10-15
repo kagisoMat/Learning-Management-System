@@ -1,24 +1,43 @@
-// src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard'; // Correct path to Dashboard
-import Login from './components/Login'; // Correct path to Login
-import Register from './components/Register'; // Correct path to Register
-import AddStudent from './components/AddStudent'; // Correct path to AddStudent
+import React, { useState } from 'react';
 
 function App() {
-    return (
-        <Router>
-            <div>
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/add-student" element={<AddStudent />} />
-                </Routes>
-            </div>
-        </Router>
-    );
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const addStudent = async () => {
+    const response = await fetch('http://localhost:5000/add_student', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email }),
+    });
+
+    if (response.ok) {
+      alert('Student added successfully!');
+      setName('');
+      setEmail('');
+    }
+  };
+
+  return (
+    <div>
+      <h1>Add Student</h1>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button onClick={addStudent}>Add Student</button>
+    </div>
+  );
 }
 
 export default App;
