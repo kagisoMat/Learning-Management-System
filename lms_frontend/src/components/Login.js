@@ -31,9 +31,7 @@ function Login() {
   return (
     <div>
       <h2>Login</h2>
-      <input
-        type="text"
-        placeholder="Username"
+      <input type="text" placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
@@ -45,6 +43,8 @@ function Login() {
       />
       <button onClick={handleLogin}>Login</button>
     </div>
+
+    
   );
 }
 

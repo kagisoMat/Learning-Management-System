@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Profile from './components/Profile';
 import AddStudent from './components/AddStudent';
-import AddCourse from './components/AddCourse';
-import AddExam from './components/AddExam';
-import StudentList from './components/StudentList';
-import CourseList from './components/CourseList';
-import ExamList from './components/ExamList';
+import NotFound from './components/NotFound';
 
 function App() {
+  const [students, setStudents] = useState([]);
+
+  const addStudent = (newStudent) => {
+    setStudents([...students, newStudent]);
+  };
+
   return (
-    <div>
-      <h1>Learning Management System</h1> {/* Optional Header */}
-      <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/add_student" element={<AddStudent />} />
-        <Route path="/add_course" element={<AddCourse />} />
-        <Route path="/add_exam" element={<AddExam />} />
-        <Route path="/students" element={<StudentList />} />
-        <Route path="/courses" element={<CourseList />} />
-        <Route path="/exams" element={<ExamList />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard students={students} />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/add-student" element={<AddStudent onAddStudent={addStudent} />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 

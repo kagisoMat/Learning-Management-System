@@ -1,66 +1,45 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function AddStudent() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+const AddStudent = ({ onAddStudent }) => {
+  const [studentData, setStudentData] = useState({
+    studentName: '',
+    studentNo: '',
+    idNumber: '',
+    about: '',
+    overallGrade: '',
+    contact: ''
+  });
 
-  const handleAddStudent = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
-    try {
-      const response = await fetch('http://localhost:5000/add_student', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email }),
-      });
-      if (response.ok) {
-        alert('Student added successfully!');
-        // Optionally, reset the form or redirect to student list
-        setName('');
-        setEmail('');
-      } else {
-        const errorData = await response.json();
-        alert(`Failed to add student: ${errorData.error}`);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error during adding student');
-    }
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setStudentData({
+      ...studentData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onAddStudent(studentData); // Add student to dashboard
+    navigate('/dashboard'); // Redirect back to the dashboard
   };
 
   return (
     <div>
       <h2>Add Student</h2>
-      <form onSubmit={handleAddStudent}>
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required // Make it a required field
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required // Make it a required field
-          />
-        </div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="studentName" placeholder="Student Name" onChange={handleChange} required />
+        <input type="text" name="studentNo" placeholder="Student Number" onChange={handleChange} required />
+        <input type="text" name="idNumber" placeholder="ID Number" onChange={handleChange} required />
+        <input type="text" name="about" placeholder="About Student" onChange={handleChange} />
+        <input type="text" name="overallGrade" placeholder="Overall Grade" onChange={handleChange} />
+        <input type="text" name="contact" placeholder="Contact" onChange={handleChange} required />
         <button type="submit">Add Student</button>
       </form>
     </div>
   );
-}
+};
 
 export default AddStudent;
