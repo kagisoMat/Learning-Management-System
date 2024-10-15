@@ -4,7 +4,8 @@ function AddStudent() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  const handleAddStudent = async () => {
+  const handleAddStudent = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
     try {
       const response = await fetch('http://localhost:5000/add_student', {
         method: 'POST',
@@ -15,7 +16,9 @@ function AddStudent() {
       });
       if (response.ok) {
         alert('Student added successfully!');
-        // Optionally, redirect to student list
+        // Optionally, reset the form or redirect to student list
+        setName('');
+        setEmail('');
       } else {
         const errorData = await response.json();
         alert(`Failed to add student: ${errorData.error}`);
@@ -29,19 +32,33 @@ function AddStudent() {
   return (
     <div>
       <h2>Add Student</h2>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button onClick={handleAddStudent}>Add Student</button>
+      <form onSubmit={handleAddStudent}>
+        <div>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required // Make it a required field
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required // Make it a required field
+          />
+        </div>
+        <button type="submit">Add Student</button>
+      </form>
     </div>
   );
 }
