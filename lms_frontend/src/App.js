@@ -19,7 +19,7 @@ function App() {
       <Route path="/" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard students={students} />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile/:studentNo" element={<Profile />} />
       <Route path="/add-student" element={<AddStudent onAddStudent={addStudent} />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const ProfileEdit = () => {
+const Profile = () => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         profilePicture: null,
+        studentNo: '',
+        idNumber: '',
+        about: '',
+        overallGrade: '',
+        contact: '',
     });
+
     const navigate = useNavigate();
 
+    // Handle input change
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         setFormData((prev) => ({
@@ -18,129 +25,142 @@ const ProfileEdit = () => {
         }));
     };
 
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission logic, such as sending data to the backend
+        // Simulate form submission logic
         alert('Profile updated!');
-        navigate('/dashboard'); // Redirect after update
+        navigate('/dashboard'); // Redirect to dashboard after saving
     };
 
+    // Handle form reset and navigate back to dashboard
     const handleReset = () => {
         setFormData({
             firstName: '',
             lastName: '',
             email: '',
             profilePicture: null,
+            studentNo: '',
+            idNumber: '',
+            about: '',
+            overallGrade: '',
+            contact: '',
         });
+        document.getElementById('profile-picture').value = ''; // Reset file input
+
+        navigate('/dashboard'); // Navigate back to dashboard
     };
 
-    const containerStyle = {
-        fontFamily: 'Arial, sans-serif',
-        backgroundColor: '#101828',
-        color: 'white',
-        margin: 0,
-        padding: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
+    // Styles
+    const styles = {
+        container: {
+            fontFamily: 'Arial, sans-serif',
+            backgroundColor: '#101828',
+            color: 'white',
+            margin: 0,
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+        },
+        profileContainer: {
+            width: '600px',
+            backgroundColor: '#1D1D2B',
+            padding: '20px',
+            borderRadius: '10px',
+        },
+        header: {
+            display: 'flex',
+            alignItems: 'center',
+            borderBottom: '1px solid #333',
+            paddingBottom: '20px',
+        },
+        picture: {
+            borderRadius: '50%',
+            width: '100px',
+            height: '100px',
+            marginRight: '20px',
+        },
+        info: {
+            color: '#ffffff',
+        },
+        form: {
+            marginTop: '20px',
+        },
+        label: {
+            display: 'block',
+            margin: '10px 0 5px',
+            color: '#9A9A9A',
+        },
+        input: {
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #333',
+            borderRadius: '5px',
+            backgroundColor: '#2C2C3D',
+            color: '#ffffff',
+        },
+        textarea: {
+            width: '100%',
+            padding: '10px',
+            border: '1px solid #333',
+            borderRadius: '5px',
+            backgroundColor: '#2C2C3D',
+            color: '#ffffff',
+            resize: 'vertical',
+        },
+        button: {
+            padding: '10px 20px',
+            marginTop: '20px',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+        },
+        submitButton: {
+            backgroundColor: '#4A5FE1',
+            color: 'white',
+        },
+        resetButton: {
+            backgroundColor: '#555',
+            color: 'white',
+            marginLeft: '10px',
+        },
     };
 
-    const profileContainerStyle = {
-        width: '600px',
-        backgroundColor: '#1D1D2B',
-        padding: '20px',
-        borderRadius: '10px',
-    };
-
-    const headerStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        borderBottom: '1px solid #333',
-        paddingBottom: '20px',
-    };
-
-    const pictureStyle = {
-        borderRadius: '50%',
-        width: '100px',
-        height: '100px',
-        marginRight: '20px',
-    };
-
-    const infoStyle = {
-        color: '#ffffff',
-    };
-
-    const formStyle = {
-        marginTop: '20px',
-    };
-
-    const labelStyle = {
-        display: 'block',
-        margin: '10px 0 5px',
-        color: '#9A9A9A',
-    };
-
-    const inputStyle = {
-        width: '100%',
-        padding: '10px',
-        border: '1px solid #333',
-        borderRadius: '5px',
-        backgroundColor: '#2C2C3D',
-        color: '#ffffff',
-    };
-
-    const buttonStyle = {
-        padding: '10px 20px',
-        marginTop: '20px',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-    };
-
-    const submitButtonStyle = {
-        ...buttonStyle,
-        backgroundColor: '#4A5FE1',
-        color: 'white',
-    };
-
-    const resetButtonStyle = {
-        ...buttonStyle,
-        backgroundColor: '#555',
-        color: 'white',
-    };
-
+    // Profile picture preview logic
     const profilePicturePreview = formData.profilePicture ? (
         <img
             src={URL.createObjectURL(formData.profilePicture)}
             alt="Profile Preview"
-            style={pictureStyle}
+            style={styles.picture}
         />
     ) : (
         <img
             src="https://via.placeholder.com/150"
             alt="Profile"
-            style={pictureStyle}
+            style={styles.picture}
         />
     );
 
     return (
-        <div style={containerStyle}>
-            <div style={profileContainerStyle}>
-                <div style={headerStyle}>
+        <div style={styles.container}>
+            <div style={styles.profileContainer}>
+                <div style={styles.header}>
                     {profilePicturePreview}
-                    <div style={infoStyle}>
-                        <h2>{formData.firstName} {formData.lastName}</h2>
-                        <p>{formData.email}</p>
+                    <div style={styles.info}>
+                        <h2>{formData.firstName || 'First Name'} {formData.lastName || 'Last Name'}</h2>
+                        <p>{formData.email || 'Email Address'}</p>
                     </div>
                 </div>
 
-                <div style={formStyle}>
-                    <h3 style={infoStyle}>Personal info</h3>
+                <div style={styles.form}>
+                    <h3 style={styles.info}>Personal Info</h3>
                     <form onSubmit={handleSubmit}>
-                        <label style={labelStyle} htmlFor="first-name">First name</label>
+                        {/* First Name */}
+                        <label style={styles.label} htmlFor="first-name">First Name</label>
                         <input
-                            style={inputStyle}
+                            style={styles.input}
                             type="text"
                             id="first-name"
                             name="firstName"
@@ -149,9 +169,10 @@ const ProfileEdit = () => {
                             required
                         />
 
-                        <label style={labelStyle} htmlFor="last-name">Last name</label>
+                        {/* Last Name */}
+                        <label style={styles.label} htmlFor="last-name">Last Name</label>
                         <input
-                            style={inputStyle}
+                            style={styles.input}
                             type="text"
                             id="last-name"
                             name="lastName"
@@ -160,9 +181,10 @@ const ProfileEdit = () => {
                             required
                         />
 
-                        <label style={labelStyle} htmlFor="email">Email address</label>
+                        {/* Email */}
+                        <label style={styles.label} htmlFor="email">Email Address</label>
                         <input
-                            style={inputStyle}
+                            style={styles.input}
                             type="email"
                             id="email"
                             name="email"
@@ -171,9 +193,67 @@ const ProfileEdit = () => {
                             required
                         />
 
-                        <label style={labelStyle} htmlFor="profile-picture">Profile picture</label>
+                        {/* Student No. */}
+                        <label style={styles.label} htmlFor="student-no">Student No.</label>
                         <input
-                            style={inputStyle}
+                            style={styles.input}
+                            type="text"
+                            id="student-no"
+                            name="studentNo"
+                            value={formData.studentNo}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        {/* ID Number */}
+                        <label style={styles.label} htmlFor="id-number">ID Number</label>
+                        <input
+                            style={styles.input}
+                            type="text"
+                            id="id-number"
+                            name="idNumber"
+                            value={formData.idNumber}
+                            onChange={handleChange}
+                            required
+                        />
+
+                        {/* About */}
+                        <label style={styles.label} htmlFor="about">About</label>
+                        <textarea
+                            style={styles.textarea}
+                            id="about"
+                            name="about"
+                            value={formData.about}
+                            onChange={handleChange}
+                            rows="4"
+                        />
+
+                        {/* Overall Grade */}
+                        <label style={styles.label} htmlFor="overall-grade">Overall Grade</label>
+                        <input
+                            style={styles.input}
+                            type="text"
+                            id="overall-grade"
+                            name="overallGrade"
+                            value={formData.overallGrade}
+                            onChange={handleChange}
+                        />
+
+                        {/* Contact */}
+                        <label style={styles.label} htmlFor="contact">Contact</label>
+                        <input
+                            style={styles.input}
+                            type="text"
+                            id="contact"
+                            name="contact"
+                            value={formData.contact}
+                            onChange={handleChange}
+                        />
+
+                        {/* Profile Picture */}
+                        <label style={styles.label} htmlFor="profile-picture">Profile Picture</label>
+                        <input
+                            style={styles.input}
                             type="file"
                             id="profile-picture"
                             name="profilePicture"
@@ -181,8 +261,9 @@ const ProfileEdit = () => {
                             onChange={handleChange}
                         />
 
-                        <button type="submit" style={submitButtonStyle}>Save changes</button>
-                        <button type="button" style={resetButtonStyle} onClick={handleReset}>Cancel</button>
+                        {/* Buttons */}
+                        <button type="submit" style={{ ...styles.button, ...styles.submitButton }}>Save Changes</button>
+                        <button type="button" style={{ ...styles.button, ...styles.resetButton }} onClick={handleReset}>Cancel</button>
                     </form>
                 </div>
             </div>
@@ -190,4 +271,4 @@ const ProfileEdit = () => {
     );
 };
 
-export default ProfileEdit;
+export default Profile;

@@ -69,7 +69,7 @@ const Dashboard = ({ students }) => {
                 <td>{student.about}</td>
                 <td className="grade">{student.overallGrade}</td>
                 <td>{student.contact}</td>
-                <td><button onClick={() => navigate(`/profile/edit/${student.studentNo}`)}>Edit</button></td>
+                <td><button onClick={() => navigate(`/profile/${student.studentNo}`)}>Edit</button></td>
               </tr>
             ))
           ) : (
