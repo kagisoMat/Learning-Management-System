@@ -1,7 +1,5 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './auth.css'; // Assuming you'll use a separate CSS for authentication
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -43,4 +41,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Login; // Ensure this is present

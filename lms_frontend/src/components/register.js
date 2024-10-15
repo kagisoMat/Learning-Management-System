@@ -1,32 +1,21 @@
-// src/components/Register.js
 import React, { useState } from 'react';
-import './auth.css'; // Assuming the same CSS for styling
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
-    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Registration logic here (you can integrate with backend)
-        console.log("Admin Registered:", name, email, password);
-        // Redirect to login page after registration (optional)
+        console.log("Admin Registered:", email, password);
+        navigate('/'); // Navigate back to login after registration
     };
 
     return (
         <div className="auth-container">
-            <h2>Admin Register</h2>
+            <h2>Admin Registration</h2>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </div>
                 <div className="form-group">
                     <label>Email</label>
                     <input
@@ -51,4 +40,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Register; // Ensure this is present
