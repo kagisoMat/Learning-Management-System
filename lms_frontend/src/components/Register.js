@@ -1,11 +1,51 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
+
+const registerStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+  backgroundColor: '#f0f0f0',
+  color: '#333',
+  padding: '20px',
+  fontFamily: 'Arial, sans-serif',
+};
+
+const headingStyle = {
+  fontSize: '2rem',
+  marginBottom: '20px',
+};
+
+const inputStyle = {
+  padding: '10px',
+  margin: '10px 0',
+  width: '100%',
+  maxWidth: '300px',
+  border: '1px solid #ccc',
+  borderRadius: '4px',
+};
+
+const buttonStyle = {
+  padding: '10px 20px',
+  backgroundColor: '#007BFF',
+  color: 'white',
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer',
+};
+
+const buttonHoverStyle = {
+  backgroundColor: '#0056b3',
+};
 
 function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
-  const handleRegister = async (e) => {
-    e.preventDefault(); // Prevent the default form submission
+  const handleRegister = async () => {
     try {
       const response = await fetch('http://localhost:5000/register', {
         method: 'POST',
@@ -14,9 +54,14 @@ function Register() {
         },
         body: JSON.stringify({ username, password }),
       });
+
       if (response.ok) {
         alert('Registration successful!');
-        // Optionally, redirect to the login page
+        // Clear input fields
+        setUsername('');
+        setPassword('');
+        // Redirect to login page
+        navigate('/login'); // Use navigate to redirect
       } else {
         const errorData = await response.json();
         alert(`Registration failed: ${errorData.error}`);
@@ -28,35 +73,30 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required // Make it a required field
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required // Make it a required field
-          />
-        </div>
-        <button type="submit">Register</button>
-      </form>
+    <div style={registerStyle}>
+      <h2 style={headingStyle}>Register</h2>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        style={inputStyle}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        style={inputStyle}
+      />
+      <button
+        onClick={handleRegister}
+        style={buttonStyle}
+        onMouseOver={(e) => e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor}
+        onMouseOut={(e) => e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor}
+      >
+        Register
+      </button>
     </div>
   );
 }

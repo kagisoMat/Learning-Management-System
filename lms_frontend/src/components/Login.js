@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Create a navigate function using useNavigate
 
   const handleLogin = async () => {
     try {
@@ -15,7 +17,7 @@ function Login() {
       });
       if (response.ok) {
         alert('Login successful!');
-        // Redirect to dashboard
+        navigate('/dashboard'); // Navigate to the dashboard on successful login
       } else {
         const errorData = await response.json();
         alert(`Login failed: ${errorData.error}`);
